@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { v4 as uuid } from 'uuid';
 
 // import Feedback from './components/Feedback/Feedback';
 import Phonebook from './components/Phonebook/Phonebook';
@@ -12,7 +13,9 @@ class App extends React.Component {
       { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
-    // name: ''
+    filter: '',
+    name: '',
+    number: '',
   };
 
   deleteContact = contactId => {
@@ -21,12 +24,47 @@ class App extends React.Component {
     }));
   };
 
+  handleChange = e => {
+    // console.log(e.target.name, e.target.value);
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+  };
+
+  idName = uuid();
+  idNumber = uuid();
+
   render() {
+    console.log(this.state.name, this.state.number);
     const { contacts } = this.state;
 
     return (
       <div className="App">
         <Phonebook contacts={contacts} onDeleteContact={this.deleteContact} />
+
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor={this.idName}>Name</label>
+          <input
+            id={this.idName}
+            name="name"
+            type="text"
+            onChange={this.handleChange}
+          />
+
+          <label htmlFor={this.idNumber}>Number</label>
+          <input
+            id={this.idNumber}
+            name="number"
+            type="text"
+            onChange={this.handleChange}
+          />
+
+          <button type="submit">Add</button>
+        </form>
       </div>
     );
   }
