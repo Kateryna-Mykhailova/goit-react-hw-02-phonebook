@@ -1,4 +1,5 @@
 import React from 'react';
+
 import './App.css';
 // import { v4 as uuid } from 'uuid';
 import { Form } from './components/Form/Form';
@@ -20,11 +21,13 @@ class App extends React.Component {
   };
 
   addNewContact = newContact => {
-    this.setState(prevState => {
-      return {
-        contacts: [...prevState.contacts, newContact],
-      };
-    });
+    this.state.contacts.find(contact => contact.name === newContact.name)
+      ? alert(`${newContact.name} already exists`)
+      : this.setState(prevState => {
+          return {
+            contacts: [...prevState.contacts, newContact],
+          };
+        });
   };
 
   changeFilter = e => {

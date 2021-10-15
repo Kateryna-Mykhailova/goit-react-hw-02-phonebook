@@ -22,6 +22,7 @@ export class Form extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { name, number } = this.state;
+
     const newContact = {
       name,
       number,
