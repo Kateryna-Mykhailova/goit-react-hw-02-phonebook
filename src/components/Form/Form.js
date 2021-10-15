@@ -10,23 +10,31 @@ export class Form extends Component {
 
   idName = uuid();
   idNumber = uuid();
+
   handleChange = e => {
-    // console.log(e.target.name, e.target.value);
+    const { name, value } = e.target;
     this.setState({
-      [e.target.name]: e.target.value,
+      [name]: value,
+      //   [e.target.name]: e.target.value,
     });
   };
 
   handleSubmit = e => {
     e.preventDefault();
+    const { name, number } = this.state;
     const newContact = {
-      name: this.state.name,
-      number: this.state.number,
+      name,
+      number,
       id: uuid(),
     };
-    // this.setState({ contact: newContact });
 
-    this.props.addNewProduct(newContact);
+    // const newContact = {
+    //   name: this.state.name,
+    //   number: this.state.number,
+    //   id: uuid(),
+    // };
+
+    this.props.addNewContact(newContact);
     // this.setState((prevState) => {
     //   return {
     //     contacts: [...prevState.contacts, newContact ]
@@ -36,17 +44,19 @@ export class Form extends Component {
   };
 
   resetForm = () => {
+    // this.setState({...this.state});
     this.setState({ name: '', number: '' });
   };
 
   render() {
+    const { name, number } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
         <label htmlFor={this.idName}>Name</label>
         <input
           id={this.idName}
           name="name"
-          value={this.state.name}
+          value={name}
           type="text"
           onChange={this.handleChange}
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -58,7 +68,7 @@ export class Form extends Component {
         <input
           id={this.idNumber}
           name="number"
-          value={this.state.number}
+          value={number}
           type="text"
           onChange={this.handleChange}
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"

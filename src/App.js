@@ -2,9 +2,10 @@ import React from 'react';
 import './App.css';
 // import { v4 as uuid } from 'uuid';
 import { Form } from './components/Form/Form';
+// import { Filter } from './components/Filter/Filter';
 // import Feedback from './components/Feedback/Feedback';
 import Phonebook from './components/Phonebook/Phonebook';
-
+import Filter from './components/Filter/Filter';
 class App extends React.Component {
   state = {
     contacts: [
@@ -18,85 +19,76 @@ class App extends React.Component {
     // number: '',
   };
 
-  addNewProduct = newContact => {
+  addNewContact = newContact => {
     this.setState(prevState => {
       return {
         contacts: [...prevState.contacts, newContact],
       };
     });
   };
+
+  changeFilter = e => {
+    this.setState({ filter: e.target.value });
+  };
+
+  getVisibleContacts = () => {
+    const { contacts, filter } = this.state;
+
+    const normalizedFilter = filter.toLocaleLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLocaleLowerCase().includes(normalizedFilter),
+    );
+  };
+  // filterContacts = filter => {
+
+  //   // console.log('object');
+  //   this.setState(prevState => ({
+  //     contacts: prevState.contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase())),
+  //   }));
+
+  //   //
+  //   // this.setState(prevState => {
+  //   //   return {
+  //   //     contacts: [...prevState.contacts, newContact],
+  //   //   };
+  //   // });
+  // };
+
+  //  addNewProduct = newContact => {
+  //     this.setState(prevState => {
+  //       return {
+  //         contacts: [...prevState.contacts, newContact],
+  //       };
+  //     });
+  //   };
+
   deleteContact = contactId => {
     this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
   };
 
-  // handleChange = e => {
-  //   // console.log(e.target.name, e.target.value);
-  //   this.setState({
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
-
-  // handleSubmit = e => {
-  //   e.preventDefault();
-  //   const newContact = {
-  //     name: this.state.name,
-  //     number: this.state.number,
-  //     id: uuid()
-  //   };
-  //   // this.setState({ contact: newContact });
-  //   this.setState((prevState) => {
-  //     return {
-  //       contacts: [...prevState.contacts, newContact ]
-  //     }
-  //   })
-  //   this.resetForm();
-  // };
-
-  // resetForm = () => {
-  //   this.setState({name: '', number: ''})
-  // }
-
-  // idName = uuid();
-  // idNumber = uuid();
+  findContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
+  };
 
   render() {
+    const { contacts, filter } = this.state;
+
+    const visibleContacts = this.getVisibleContacts();
     // console.log(this.state.name, this.state.number);
-    const { contacts } = this.state;
 
     return (
       <div className="App">
-        <Form addNewProduct={this.addNewProduct} />
-        <Phonebook contacts={contacts} onDeleteContact={this.deleteContact} />
-
-        {/* <form onSubmit={this.handleSubmit}>
-          <label htmlFor={this.idName}>Name</label>
-          <input
-            id={this.idName}
-            name="name"
-            value={this.state.name}
-            type="text"
-            onChange={this.handleChange}
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-            required
-          />
-
-          <label htmlFor={this.idNumber}>Number</label>
-          <input
-            id={this.idNumber}
-            name="number"
-            value={this.state.number}
-            type="text"
-            onChange={this.handleChange}
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
-            required
-          />
-
-          <button type="submit">Add</button>
-        </form> */}
+        <Form addNewContact={this.addNewContact} />
+        <Filter value={filter} onChange={this.changeFilter} />
+        {/* <Filter filterContacts={this.filterContacts}/> */}
+        <Phonebook
+          contacts={visibleContacts}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }
