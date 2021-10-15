@@ -1,6 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import { v4 as uuid } from 'uuid';
+import styles from '../Form/Form.module.css';
 
 export class Form extends Component {
   state = {
@@ -52,9 +53,12 @@ export class Form extends Component {
   render() {
     const { name, number } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor={this.idName}>Name</label>
+      <form className={styles.form} onSubmit={this.handleSubmit}>
+        <label className={styles.form_name} htmlFor={this.idName}>
+          Name
+        </label>
         <input
+          className={styles.form_input}
           id={this.idName}
           name="name"
           value={name}
@@ -65,8 +69,11 @@ export class Form extends Component {
           required
         />
 
-        <label htmlFor={this.idNumber}>Number</label>
+        <label className={styles.form_name} htmlFor={this.idNumber}>
+          Number
+        </label>
         <input
+          className={styles.form_input}
           id={this.idNumber}
           name="number"
           value={number}
@@ -77,7 +84,9 @@ export class Form extends Component {
           required
         />
 
-        <button type="submit">Add</button>
+        <button className={styles.form_btn} type="submit">
+          Add
+        </button>
       </form>
     );
   }

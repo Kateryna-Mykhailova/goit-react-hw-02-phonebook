@@ -1,29 +1,21 @@
 import React from 'react';
-import './Phonebook.css';
+import styles from '../Phonebook/Phonebook.module.css';
 
 const Phonebook = ({ contacts, onDeleteContact }) => (
-  <ul>
+  <ul className={styles.contact_list}>
     {contacts.map(({ id, name, number }) => (
-      <li key={id}>
-        <p>{name}</p>
+      <li className={styles.contact_item} key={id}>
+        <p className={styles.contact_name}>{name}:</p>
         <p>{number}</p>
-        <button onClick={() => onDeleteContact(id)}>Удалить</button>
+        <button
+          className={styles.contact_delate_btn}
+          onClick={() => onDeleteContact(id)}
+        >
+          Удалить
+        </button>
       </li>
     ))}
   </ul>
 );
-// class Phonebook extends React.Component {
-//   state = {
-
-//   };
-
-//   render() {
-//     return (
-//       <div className="Feedback_container">
-//     //
-//       </div>
-//     );
-//   }
-// }
 
 export default Phonebook;

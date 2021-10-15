@@ -1,12 +1,9 @@
 import React from 'react';
-
 import './App.css';
-// import { v4 as uuid } from 'uuid';
 import { Form } from './components/Form/Form';
-// import { Filter } from './components/Filter/Filter';
-// import Feedback from './components/Feedback/Feedback';
 import Phonebook from './components/Phonebook/Phonebook';
 import Filter from './components/Filter/Filter';
+
 class App extends React.Component {
   state = {
     contacts: [
@@ -16,8 +13,6 @@ class App extends React.Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    // name: '',
-    // number: '',
   };
 
   addNewContact = newContact => {
@@ -42,28 +37,6 @@ class App extends React.Component {
       contact.name.toLocaleLowerCase().includes(normalizedFilter),
     );
   };
-  // filterContacts = filter => {
-
-  //   // console.log('object');
-  //   this.setState(prevState => ({
-  //     contacts: prevState.contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase())),
-  //   }));
-
-  //   //
-  //   // this.setState(prevState => {
-  //   //   return {
-  //   //     contacts: [...prevState.contacts, newContact],
-  //   //   };
-  //   // });
-  // };
-
-  //  addNewProduct = newContact => {
-  //     this.setState(prevState => {
-  //       return {
-  //         contacts: [...prevState.contacts, newContact],
-  //       };
-  //     });
-  //   };
 
   deleteContact = contactId => {
     this.setState(prevState => ({
@@ -78,16 +51,17 @@ class App extends React.Component {
   };
 
   render() {
-    const { contacts, filter } = this.state;
+    const { filter } = this.state;
 
     const visibleContacts = this.getVisibleContacts();
     // console.log(this.state.name, this.state.number);
 
     return (
       <div className="App">
+        <h1>Phonebook</h1>
         <Form addNewContact={this.addNewContact} />
+        <h2>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
-        {/* <Filter filterContacts={this.filterContacts}/> */}
         <Phonebook
           contacts={visibleContacts}
           onDeleteContact={this.deleteContact}
@@ -96,14 +70,5 @@ class App extends React.Component {
     );
   }
 }
-
-// function App() {
-//   return (
-//     <div className="App">
-//       {/* <Feedback /> */}
-//       <Phonebook />
-//     </div>
-//   );
-// }
 
 export default App;

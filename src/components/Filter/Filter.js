@@ -1,11 +1,11 @@
 import React from 'react';
-import { Component } from 'react';
-import { v4 as uuid } from 'uuid';
+import styles from '../Filter/Filter.module.css';
 
 const Filter = ({ value, onChange }) => (
-  <label>
+  <label className={styles.form_name}>
     Find contacts by name
     <input
+      className={styles.form_input}
       //  id={this.idFilter }
       name="filter"
       value={value}
